@@ -11,15 +11,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       #checkout
-      - uses: xt0rted/pull-request-comment-branch@v1
+      - name: "Use pull-request-comment-branch action"
+        uses: xt0rted/pull-request-comment-branch@v1
         if: ${{ startsWith(github.event.comment.body, '/deploy') }}
       
-      - uses: actions/checkout@v2
+      - name: "Checkout to ${{ steps.comment-branch.outputs.head_ref }}"
+        uses: actions/checkout@v2
         if: ${{ startsWith(github.event.comment.body, '/deploy') }}
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
           
-      - uses: actions/checkout@v2
+      - name: "Checkout tot {{github.head_ref}}"
+        uses: actions/checkout@v2
         if: ${{ startsWith(github.event.comment.body, '/deploy2') }}
       #checkout
       - run: ls
