@@ -7,7 +7,7 @@ on:
     types: [submitted]
 
 jobs:
-  test:
+  checkoutOnComment:
     runs-on: ubuntu-latest
     if: ${{ startsWith(github.event.comment.body, '/deploy') }}
     steps:
@@ -18,4 +18,20 @@ jobs:
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
           
+      - run: ls
+  checkoutOnApprove:
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.event.comment.body, '/deploy2') }}
+    steps:
+      - uses: xt0rted/pull-request-comment-branch@v1
+        id: comment-branch
+      
+      - uses: actions/checkout@v2
+          
+      - run: ls
+      
+  build:
+    runs-on: ubuntu-lates
+    needs: [checkoutOnComment, checkoutOnApprove]
+    steps:
       - run: ls
