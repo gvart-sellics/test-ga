@@ -24,6 +24,6 @@ jobs:
           
       - name: "Checkout 2"
         uses: actions/checkout@v2
-        if: ${{ startsWith(github.event.comment.body, '/deploy2') }}
+        if: ${{ startsWith(github.event.comment.body, '/2deploy') }}
       #checkout
       - run: ls
