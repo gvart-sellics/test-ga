@@ -15,3 +15,12 @@ jobs:
 
       - name: test
         run: echo "${{ toJson(github) }}"
+        
+        
+      - name: test2
+        run: echo "${{ GITHUB_REF }}"
+
+        
+        
+      - name: test3
+        run: echo "$GITHUB_REF"
