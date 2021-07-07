@@ -7,31 +7,24 @@ on:
     types: [submitted]
 
 jobs:
-  checkoutOnComment:
+  checkout:
     runs-on: ubuntu-latest
-    if: ${{ startsWith(github.event.comment.body, '/deploy') }}
     steps:
       - uses: xt0rted/pull-request-comment-branch@v1
-        id: comment-branch
+        if: ${{ startsWith(github.event.comment.body, '/deploy') }}
       
       - uses: actions/checkout@v2
+        if: ${{ startsWith(github.event.comment.body, '/deploy') }}
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
           
-      - run: ls
-  checkoutOnApprove:
-    runs-on: ubuntu-latest
-    if: ${{ startsWith(github.event.comment.body, '/deploy2') }}
-    steps:
-      - uses: xt0rted/pull-request-comment-branch@v1
-        id: comment-branch
-      
       - uses: actions/checkout@v2
-          
+        if: ${{ startsWith(github.event.comment.body, '/deploy2') }}
+        
       - run: ls
-      
+  
   build:
     runs-on: ubuntu-lates
-    needs: [checkoutOnComment, checkoutOnApprove]
+    needs: [checkout]
     steps:
       - run: ls
